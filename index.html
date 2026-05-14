@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Apology from the Heart</title>
+    <style>
+        :root {
+            --pink-bg: #ffe4e1;
+            --pink-dark: #ffb6c1;
+            --heart-red: #ff4d6d;
+        }
+
+        body {
+            background-color: var(--pink-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            color: var(--heart-red);
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .envelope-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .envelope {
+            background-color: var(--pink-dark);
+            width: 150px;
+            height: 100px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            color: white;
+            font-weight: bold;
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+
+        /* Simple Heart Animation */
+        .heart {
+            position: absolute;
+            color: var(--heart-red);
+            font-size: 20px;
+            animation: float 4s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Modal styling for the messages */
+        #messageModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 100;
+            max-width: 80%;
+            text-align: center;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 99;
+        }
+
+        button {
+            background: var(--heart-red);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Something from my heart...</h1>
+        <div class="envelope-grid">
+            <div class="envelope" onclick="showMessage('You matter most to me ❤️')">You Matter</div>
+            <div class="envelope" onclick="showMessage('I am truly sorry for my mistakes.')">I'm Sorry</div>
+            <div class="envelope" onclick="showMessage('Let\'s make more happy memories together.')">A Memory</div>
+            <div class="envelope" onclick="showMessage('I love you more than words (or code) can say.')">I Love You</div>
+        </div>
+    </div>
+
+    <div id="overlay" class="overlay" onclick="closeModal()"></div>
+    <div id="messageModal">
+        <p id="modalText"></p>
+        <button onclick="closeModal()">Close</button>
+    </div>
+
+    <script>
+        function showMessage(msg) {
+            document.getElementById('modalText').innerText = msg;
+            document.getElementById('messageModal').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('messageModal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Generate floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>
